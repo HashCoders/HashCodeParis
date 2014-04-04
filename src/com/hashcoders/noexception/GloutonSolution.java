@@ -3,17 +3,19 @@ package com.hashcoders.noexception;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hashcoders.noexception.HashCodeTrial.Board;
-
 public class GloutonSolution extends Solution {
 
 	public int getBestSquare(Board board, int x, int y) {
-		for (int radius = 0; radius < board.w; radius++) {
+		for (int radius = 1; radius < board.w; radius++) {
 			int size = 2*radius;
 			if ((x+size) >= board.w || (y+size) >= board.h)
 				return radius-1;
 			for (int i = 0; i <= size; i++)
 			{
+				if (!board.cells[x+i][y+size-1])
+					return radius-1;
+				if (!board.cells[x+size-1][y+i])
+					return radius-1;
 				if (!board.cells[x+i][y+size])
 					return radius-1;
 				if (!board.cells[x+size][y+i])
@@ -25,8 +27,8 @@ public class GloutonSolution extends Solution {
 	}
 	
 	public void clearSquare(Board board, int x, int y, int radius) {
-		for (int px = x - radius; px < x+radius; px++)
-			for (int py = y-radius; py < y+radius; py++)
+		for (int px = x - radius; px <= x+radius; px++)
+			for (int py = y-radius; py <= y+radius; py++)
 				board.cells[px][py] = false;
 	}
 	

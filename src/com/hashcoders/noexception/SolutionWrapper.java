@@ -1,11 +1,7 @@
 package com.hashcoders.noexception;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.hashcoders.noexception.HashCodeTrial.Board;
 
 public class SolutionWrapper extends Solution {
 

@@ -16,4 +16,11 @@ public class PaintAction  extends Action {
 	public String toString() {
 		return "PAINTSQ " + y + " " + x + " " + radius;
 	}
+
+	@Override
+	public void act(Board board) {
+		for (int px = x-radius; px <= x+radius; px++)
+			for (int py = y-radius; py <= y+radius; py++)
+				board.cells[px][py] = true;
+	}
 }

@@ -1,49 +1,13 @@
 package com.hashcoders.noexception;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
 
 public class HashCodeTrial {
-
-	public static class Board {
-		boolean[][] cells;
-		int w,h;
-		
-		public Board(int w, int h) {
-			cells = new boolean[w][h];
-			this.w = w;
-			this.h = h;
-		}
-	}
-
 	
-	public static Board loadBoard(String filename) throws IOException {
-		
-		//TODO : make it work
-		BufferedReader br = new BufferedReader(new FileReader(new File(filename)));
-		String line;
-		// First: size
-		line = br.readLine();
-		String[] size = line.split(" ");
-		int w = Integer.parseInt(size[1]);
-		int h = Integer.parseInt(size[0]);
-		Board board = new Board(w, h);
-		
-		int j = 0;
-		while ((line = br.readLine()) != null) {
-		   for (int i = 0; i < line.length(); i++)
-			   board.cells[i][j] = (line.charAt(i) == '#');
-		   j++;
-		}
-		br.close();
-		
-		return board;
-	}
+
 	
 
 
@@ -53,7 +17,7 @@ public class HashCodeTrial {
 		String input = "doodle.txt";
 		
 		try {
-			Board board = loadBoard(input);
+			Board board = Board.fromFile(input);
 			// Solution solution = new SolutionWrapper(new NaiveSolution(), 5);
 			Solution solution = new GloutonSolution();
 			List<Action> actions = solution.process(board);
@@ -61,6 +25,9 @@ public class HashCodeTrial {
 			writer.println(actions.size());
 			for (int i = 0;i < actions.size(); i++)
 				writer.println(actions.get(i));
+			
+			Board newBoard = Board.fromActions(actions, board.w, board.h);
+			newBoard.toFile("board.txt");
 			
 			writer.close();
 		} catch (IOException e) {

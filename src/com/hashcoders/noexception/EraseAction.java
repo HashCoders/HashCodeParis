@@ -13,5 +13,10 @@ public class EraseAction extends Action {
 	public String toString() {
 		return "ERASECELL " + y + " " + x;
 	}
+
+	@Override
+	public void act(Board board) {
+		board.cells[x][y] = false;
+	}
 	
 }
