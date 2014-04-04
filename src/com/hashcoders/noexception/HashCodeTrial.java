@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HashCodeTrial {
@@ -48,10 +50,16 @@ public class HashCodeTrial {
 	public static void naiveSolution(Board board, String output) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter(output, "UTF-8");
 		
+		List<String> actions = new ArrayList<String>();
+		
 		for (int w = 0; w < board.w; w++)
 			for (int h = 0; h < board.h; h++)
 				if (board.cells[w][h])
-					writer.println("PAINTSQ " + w + " " + h + " 0");
+					actions.add("PAINTSQ " + h + " " + w + " 0");
+		
+		writer.println(actions.size());
+		for (int i = 0;i < actions.size(); i++)
+			writer.println(actions.get(i));
 		
 		writer.close();
 	}
