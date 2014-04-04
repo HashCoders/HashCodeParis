@@ -2,12 +2,9 @@ package com.hashcoders.noexception;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,28 +20,7 @@ public class HashCodeTrial {
 			this.h = h;
 		}
 	}
-	
-	public static abstract class Action {
-		public abstract String toString();
-	}
-	
-	public static class PaintAction extends Action {
 
-		int x;
-		int y;
-		int radius;
-		
-		public PaintAction(int x, int y, int radius) {
-			this.x = x;
-			this.y = y;
-			this.radius = radius;
-		}
-		
-		@Override
-		public String toString() {
-			return "PAINTSQ " + y + " " + x + " " + radius;
-		}
-	}
 	
 	public static Board loadBoard(String filename) throws IOException {
 		
@@ -69,24 +45,18 @@ public class HashCodeTrial {
 		return board;
 	}
 	
-	public static List<Action> naiveSolution(Board board) throws FileNotFoundException, UnsupportedEncodingException {
-		
-		List<Action> actions = new ArrayList<Action>();
-		
-		for (int w = 0; w < board.w; w++)
-			for (int h = 0; h < board.h; h++)
-				if (board.cells[w][h])
-					actions.add(new PaintAction(w,h,0));
-		
-		return actions;
-	}
+
+
+
 	
 	public static void main(String[] args) {
 		String input = "doodle.txt";
 		
 		try {
 			Board board = loadBoard(input);
-			List<Action> actions = naiveSolution(board);
+			// Solution solution = new SolutionWrapper(new NaiveSolution(), 5);
+			Solution solution = new NaiveSolution();
+			List<Action> actions = solution.process(board);
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			writer.println(actions.size());
 			for (int i = 0;i < actions.size(); i++)
