@@ -24,6 +24,28 @@ public class HashCodeTrial {
 		}
 	}
 	
+	public static abstract class Action {
+		public abstract String toString();
+	}
+	
+	public static class PaintAction extends Action {
+
+		int x;
+		int y;
+		int radius;
+		
+		public PaintAction(int x, int y, int radius) {
+			this.x = x;
+			this.y = y;
+			this.radius = radius;
+		}
+		
+		@Override
+		public String toString() {
+			return "PAINTSQ " + y + " " + x + " " + radius;
+		}
+	}
+	
 	public static Board loadBoard(String filename) throws IOException {
 		
 		//TODO : make it work
@@ -47,21 +69,16 @@ public class HashCodeTrial {
 		return board;
 	}
 	
-	public static void naiveSolution(Board board, String output) throws FileNotFoundException, UnsupportedEncodingException {
-		PrintWriter writer = new PrintWriter(output, "UTF-8");
+	public static List<Action> naiveSolution(Board board) throws FileNotFoundException, UnsupportedEncodingException {
 		
-		List<String> actions = new ArrayList<String>();
+		List<Action> actions = new ArrayList<Action>();
 		
 		for (int w = 0; w < board.w; w++)
 			for (int h = 0; h < board.h; h++)
 				if (board.cells[w][h])
-					actions.add("PAINTSQ " + h + " " + w + " 0");
+					actions.add(new PaintAction(w,h,0));
 		
-		writer.println(actions.size());
-		for (int i = 0;i < actions.size(); i++)
-			writer.println(actions.get(i));
-		
-		writer.close();
+		return actions;
 	}
 	
 	public static void main(String[] args) {
@@ -69,12 +86,16 @@ public class HashCodeTrial {
 		
 		try {
 			Board board = loadBoard(input);
-			naiveSolution(board, "output.txt");
+			List<Action> actions = naiveSolution(board);
+			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+			writer.println(actions.size());
+			for (int i = 0;i < actions.size(); i++)
+				writer.println(actions.get(i));
+			
+			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 }
