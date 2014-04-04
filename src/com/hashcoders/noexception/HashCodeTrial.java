@@ -55,7 +55,7 @@ public class HashCodeTrial {
 		try {
 			Board board = loadBoard(input);
 			// Solution solution = new SolutionWrapper(new NaiveSolution(), 5);
-			Solution solution = new NaiveSolution();
+			Solution solution = new GloutonSolution();
 			List<Action> actions = solution.process(board);
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			writer.println(actions.size());
