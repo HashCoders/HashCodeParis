@@ -10,9 +10,9 @@ public class GloutonSolution extends Solution {
 	public int getBestSquare(Board board, int x, int y) {
 		for (int radius = 0; radius < board.w; radius++) {
 			int size = 2*radius;
-			if (x+size > board.w || y+size > board.h)
+			if ((x+size) >= board.w || (y+size) >= board.h)
 				return radius-1;
-			for (int i = 0; i < size; i++)
+			for (int i = 0; i <= size; i++)
 			{
 				if (!board.cells[x+i][y+size])
 					return radius-1;
@@ -36,10 +36,12 @@ public class GloutonSolution extends Solution {
 		for (int x = 0; x < board.w; x++)
 			for (int y = 0; y < board.h; y++)
 			{
+				if (!board.cells[x][y])
+					continue;
 				// Get best square from here
 				int radius = getBestSquare(board, x, y);
 				actions.add(new PaintAction(x+radius, y+radius, radius));
-				clearSquare(board, x, y, radius);
+				clearSquare(board, x+radius, y+radius, radius);
 			}
 		
 		return actions;
