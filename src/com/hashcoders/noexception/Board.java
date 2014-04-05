@@ -14,9 +14,18 @@ public class Board {
 	int w,h;
 	
 	public Board(int w, int h) {
-		cells = new boolean[w][h];
 		this.w = w;
 		this.h = h;
+		cells = new boolean[w][h];
+	}
+	
+	public Board(Board board) {
+		w = board.w;
+		h = board.h;
+		cells = new boolean[w][h];
+		for (int x = 0; x < w; x++)
+			for (int y = 0; y < h; y++)
+				cells[x][y] = board.cells[x][y];
 	}
 	
 	public static Board fromActions(List<Action> actions, int w, int h) {
